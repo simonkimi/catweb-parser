@@ -42,7 +42,7 @@ func (p *Selector) CallJs(input string) (string, error) {
 			return "", err
 		}
 
-		runString, err := vm.RunString("hook(" + input + ")")
+		runString, err := vm.RunString("hook('" + input + "')")
 		if err != nil {
 			return "", err
 		}
