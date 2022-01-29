@@ -4,7 +4,7 @@
 // 	protoc        v3.17.3
 // source: model.proto
 
-package proto
+package protobuf
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -115,6 +115,77 @@ func (x *ImagePb) GetTarget() string {
 	return ""
 }
 
+type ColorPb struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	A int32 `protobuf:"varint,1,opt,name=a,proto3" json:"a,omitempty"`
+	R int32 `protobuf:"varint,2,opt,name=r,proto3" json:"r,omitempty"`
+	G int32 `protobuf:"varint,3,opt,name=g,proto3" json:"g,omitempty"`
+	B int32 `protobuf:"varint,4,opt,name=b,proto3" json:"b,omitempty"`
+}
+
+func (x *ColorPb) Reset() {
+	*x = ColorPb{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_model_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ColorPb) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ColorPb) ProtoMessage() {}
+
+func (x *ColorPb) ProtoReflect() protoreflect.Message {
+	mi := &file_model_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ColorPb.ProtoReflect.Descriptor instead.
+func (*ColorPb) Descriptor() ([]byte, []int) {
+	return file_model_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *ColorPb) GetA() int32 {
+	if x != nil {
+		return x.A
+	}
+	return 0
+}
+
+func (x *ColorPb) GetR() int32 {
+	if x != nil {
+		return x.R
+	}
+	return 0
+}
+
+func (x *ColorPb) GetG() int32 {
+	if x != nil {
+		return x.G
+	}
+	return 0
+}
+
+func (x *ColorPb) GetB() int32 {
+	if x != nil {
+		return x.B
+	}
+	return 0
+}
+
 var File_model_proto protoreflect.FileDescriptor
 
 var file_model_proto_rawDesc = []byte{
@@ -129,8 +200,13 @@ var file_model_proto_rawDesc = []byte{
 	0x01, 0x28, 0x01, 0x52, 0x04, 0x69, 0x6d, 0x67, 0x58, 0x12, 0x12, 0x0a, 0x04, 0x69, 0x6d, 0x67,
 	0x59, 0x18, 0x06, 0x20, 0x01, 0x28, 0x01, 0x52, 0x04, 0x69, 0x6d, 0x67, 0x59, 0x12, 0x16, 0x0a,
 	0x06, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x74,
-	0x61, 0x72, 0x67, 0x65, 0x74, 0x42, 0x09, 0x5a, 0x07, 0x2e, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x61, 0x72, 0x67, 0x65, 0x74, 0x22, 0x41, 0x0a, 0x07, 0x43, 0x6f, 0x6c, 0x6f, 0x72, 0x50, 0x62,
+	0x12, 0x0c, 0x0a, 0x01, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x01, 0x61, 0x12, 0x0c,
+	0x0a, 0x01, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x05, 0x52, 0x01, 0x72, 0x12, 0x0c, 0x0a, 0x01,
+	0x67, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x01, 0x67, 0x12, 0x0c, 0x0a, 0x01, 0x62, 0x18,
+	0x04, 0x20, 0x01, 0x28, 0x05, 0x52, 0x01, 0x62, 0x42, 0x10, 0x5a, 0x0e, 0x2e, 0x2f, 0x67, 0x65,
+	0x6e, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -145,9 +221,10 @@ func file_model_proto_rawDescGZIP() []byte {
 	return file_model_proto_rawDescData
 }
 
-var file_model_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_model_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_model_proto_goTypes = []interface{}{
 	(*ImagePb)(nil), // 0: ImagePb
+	(*ColorPb)(nil), // 1: ColorPb
 }
 var file_model_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -175,6 +252,18 @@ func file_model_proto_init() {
 				return nil
 			}
 		}
+		file_model_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ColorPb); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -182,7 +271,7 @@ func file_model_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_model_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
