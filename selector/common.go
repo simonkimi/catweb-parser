@@ -1,4 +1,4 @@
-package parser
+package selector
 
 import (
 	"github.com/dop251/goja"
@@ -8,9 +8,7 @@ import (
 	"strings"
 )
 
-type Selector protobuf.Selector
-
-func (p *Selector) CallReg(input string) (string, error) {
+func CallReg(p *protobuf.Selector, input string) (string, error) {
 	if p.Regex != "" {
 		reg, err := regexp.Compile(p.Regex)
 		if err != nil {
@@ -34,7 +32,7 @@ func (p *Selector) CallReg(input string) (string, error) {
 	}
 }
 
-func (p *Selector) CallJs(input string) (string, error) {
+func CallJs(p *protobuf.Selector, input string) (string, error) {
 	if p.Js != "" {
 		vm := goja.New()
 		_, err := vm.RunString(p.Js)

@@ -1,4 +1,4 @@
-package parser
+package selector
 
 import (
 	"errors"
@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func (p *Selector) FindElement(root *html.Node) []*html.Node {
+func FindElement(p *protobuf.Selector, root *html.Node) []*html.Node {
 	var node []*html.Node
 
 	if strings.HasPrefix(p.Selector, "/") { // XPath选择器
@@ -22,7 +22,7 @@ func (p *Selector) FindElement(root *html.Node) []*html.Node {
 	return node
 }
 
-func (p *Selector) callQuery(root *html.Node) (string, error) {
+func callQuery(p *protobuf.Selector, root *html.Node) (string, error) {
 	selector := p.Selector
 
 	if selector == "" {
@@ -34,7 +34,7 @@ func (p *Selector) callQuery(root *html.Node) (string, error) {
 		}
 	}
 
-	node := p.FindElement(root)[0]
+	node := FindElement(p, root)[0]
 
 	if node == nil {
 		return "", errors.New("no nodes")
@@ -54,18 +54,18 @@ func (p *Selector) callQuery(root *html.Node) (string, error) {
 	return "", nil
 }
 
-func (p *Selector) Find(root *html.Node) (string, error) {
-	function, err := p.callQuery(root)
+func ParseElement(p *protobuf.Selector, root *html.Node) (string, error) {
+	function, err := callQuery(p, root)
 	if err != nil {
 		return "", nil
 	}
 
-	function, err = p.CallReg(function)
+	function, err = CallReg(p, function)
 	if err != nil {
 		return "", nil
 	}
 
-	function, err = p.CallJs(function)
+	function, err = CallJs(p, function)
 	if err != nil {
 		return "", nil
 	}

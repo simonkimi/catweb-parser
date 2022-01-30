@@ -35,7 +35,7 @@ func String2Double(input string) float64 {
 	return runString.ToFloat()
 }
 
-func String2Color(input string) *protobuf.ColorPb {
+func String2Color(input string) *protobuf.ColorRpcModel {
 	var colorHex string
 	if strings.HasPrefix(input, "0x") || strings.HasPrefix(input, "0X") {
 		colorHex = input[2:]
@@ -46,7 +46,7 @@ func String2Color(input string) *protobuf.ColorPb {
 	if err != nil {
 		return nil
 	}
-	return &protobuf.ColorPb{
+	return &protobuf.ColorRpcModel{
 		A: int32(parseInt >> 24 & 0xFF),
 		R: int32(parseInt >> 16 & 0xFF),
 		G: int32(parseInt >> 8 & 0xFF),
