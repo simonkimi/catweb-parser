@@ -8,9 +8,22 @@ set CC=%ANDROID_NDK_HOME%\toolchains\llvm\prebuilt\windows-x86_64\bin\armv7a-lin
 
 go build -ldflags "-w -s" -buildmode=c-shared -o ../bin/armeabi-v7a/libgo.so ../main.go
 
+echo Build armeabi-v7a finish
+
 set GOARCH=arm64
 set GOOS=android
 set CGO_ENABLED=1
 set CC=%ANDROID_NDK_HOME%\toolchains\llvm\prebuilt\windows-x86_64\bin\aarch64-linux-android21-clang
 
 go build -ldflags "-w -s" -buildmode=c-shared -o ../bin/armeabi-v8a/libgo.so ../main.go
+
+echo Build armeabi-v8a finish
+
+set GOARCH=amd64
+set GOOS=android
+set CGO_ENABLED=1
+set CC=%ANDROID_NDK_HOME%\toolchains\llvm\prebuilt\windows-x86_64\bin\x86_64-linux-android24-clang
+
+go build -ldflags "-w -s" -buildmode=c-shared -o ../bin/x86_64/libgo.so ../main.go
+
+echo Build x86_64 finish
