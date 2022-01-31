@@ -64,3 +64,16 @@ func (p *DomSelector) GetEnv(extras []*protobuf.ExtraSelector, filter protobuf.E
 	}
 	return local, global
 }
+
+func (p *DomSelector) LocalEnv(extras []*protobuf.ExtraSelector, filter protobuf.ExtraSelectorType, parent *html.Node) map[string]string {
+	local := make(map[string]string)
+
+	for _, extra := range extras {
+		if extra.Type == filter {
+			if !extra.Global {
+				local[extra.Id] = p.String(extra.Selector, parent)
+			}
+		}
+	}
+	return local
+}

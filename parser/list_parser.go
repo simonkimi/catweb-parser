@@ -49,11 +49,6 @@ func ListParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 				})
 			}
 
-			local, global := dom.GetEnv(parser.ExtraSelector, protobuf.ExtraSelectorType_EXTRA_SELECTOR_TYPE_NONE, e)
-			for k, v := range global {
-				globalEnv[k] = v
-			}
-
 			items = append(items, &protobuf.ListRpcModel_Item{
 				IdCode:     dom.String(parser.IdCode, e),
 				Title:      dom.String(parser.Title, e),
@@ -75,11 +70,12 @@ func ListParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 					ImgY:   dom.Double(parser.PreviewImg.ImgY, e),
 				},
 				NextPage: dom.String(parser.NextPage, e),
-				Env:      local,
+				Env:      dom.LocalEnv(parser.ExtraSelector, protobuf.ExtraSelectorType_EXTRA_SELECTOR_TYPE_LIST_ITEM, e),
 			})
 		}
 		model.Items = items
-		model.Env = globalEnv
+		model.GlobalEnv = globalEnv
+		model.LocalEnv = dom.Env
 
 		marshal, err := proto.Marshal(model)
 		if err != nil {

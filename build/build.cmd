@@ -1,6 +1,9 @@
 @echo off
 set ANDROID_NDK_HOME=G:\SDK\AndroidSDK\ndk\24.0.7956693
 
+go build -buildmode=c-shared -o ../bin/windows/libgo.dll ../main.go
+echo Build native finish
+
 set GOARCH=arm
 set GOOS=android
 set CGO_ENABLED=1
