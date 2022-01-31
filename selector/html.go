@@ -1,7 +1,6 @@
 package selector
 
 import (
-	"errors"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/antchfx/htmlquery"
 	"github.com/simonkimi/catweb-parser/gen/protobuf"
@@ -11,6 +10,10 @@ import (
 
 func FindElement(p *protobuf.Selector, root *html.Node) []*html.Node {
 	var node []*html.Node
+
+	if p.Selector == "" {
+		return []*html.Node{root}
+	}
 
 	if strings.HasPrefix(p.Selector, "/") { // XPath选择器
 		node = htmlquery.Find(root, p.Selector)
@@ -23,9 +26,7 @@ func FindElement(p *protobuf.Selector, root *html.Node) []*html.Node {
 }
 
 func callQuery(p *protobuf.Selector, root *html.Node) (string, error) {
-	selector := p.Selector
-
-	if selector == "" {
+	if p.Selector == "" {
 		if !(p.Function != protobuf.SelectorFunction_SELECTOR_FUNCTION_AUTO || p.Param != "" || p.Regex != "" || p.Replace != "" || p.Js != "") {
 			if p.DefaultValue != "" {
 				return p.DefaultValue, nil
@@ -34,11 +35,11 @@ func callQuery(p *protobuf.Selector, root *html.Node) (string, error) {
 		}
 	}
 
-	node := FindElement(p, root)[0]
-
-	if node == nil {
-		return "", errors.New("no nodes")
+	nodes := FindElement(p, root)
+	if len(nodes) == 0 {
+		return "", nil
 	}
+	node := nodes[0]
 
 	switch p.Function {
 	case protobuf.SelectorFunction_SELECTOR_FUNCTION_ATTR:
@@ -55,6 +56,9 @@ func callQuery(p *protobuf.Selector, root *html.Node) (string, error) {
 }
 
 func ParseElement(p *protobuf.Selector, root *html.Node) (string, error) {
+	if p == nil {
+		return "", nil
+	}
 	function, err := callQuery(p, root)
 	if err != nil {
 		return "", nil

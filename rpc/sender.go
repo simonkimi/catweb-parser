@@ -2,9 +2,9 @@ package rpc
 
 import (
 	"errors"
-	"github.com/golang/protobuf/proto"
 	"github.com/simonkimi/catweb-parser/gen/protobuf"
 	"github.com/simonkimi/catweb-parser/parser"
+	"google.golang.org/protobuf/proto"
 )
 
 func ParseRpcData(data []byte) ([]byte, error) {
@@ -23,4 +23,23 @@ func ParseRpcData(data []byte) ([]byte, error) {
 	}
 
 	return nil, errors.New("TODO: 你怎么到的这里")
+}
+
+func ExecSelector(input []byte) []byte {
+	var errmsg string
+	data, err := ParseRpcData(input)
+	if err != nil {
+		errmsg = err.Error()
+	} else {
+		errmsg = ""
+	}
+	model := &protobuf.RpcResponse{
+		Data:  data,
+		Error: errmsg,
+	}
+	marshal, err := proto.Marshal(model)
+	if err != nil {
+		panic(err)
+	}
+	return marshal
 }

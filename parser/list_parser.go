@@ -3,9 +3,9 @@ package parser
 import (
 	"errors"
 	"github.com/antchfx/htmlquery"
-	"github.com/golang/protobuf/proto"
 	"github.com/simonkimi/catweb-parser/gen/protobuf"
 	"github.com/simonkimi/catweb-parser/selector"
+	"google.golang.org/protobuf/proto"
 	"strings"
 )
 

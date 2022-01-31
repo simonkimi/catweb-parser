@@ -5,7 +5,6 @@ go 1.17
 require (
 	github.com/PuerkitoBio/goquery v1.8.0
 	github.com/antchfx/htmlquery v1.2.4
-	github.com/golang/protobuf v1.5.2
 	github.com/robertkrimen/otto v0.0.0-20211024170158-b87d35c0b86f
 	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd
 	google.golang.org/protobuf v1.27.1
