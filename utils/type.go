@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"github.com/dop251/goja"
+	"github.com/robertkrimen/otto"
 	"github.com/simonkimi/catweb-parser/gen/protobuf"
 	"strconv"
 	"strings"
@@ -13,12 +13,16 @@ func String2Int(input string) int64 {
 		return parseInt
 	}
 
-	vm := goja.New()
-	runString, err := vm.RunString(input)
+	vm := otto.New()
+	runString, err := vm.Run(input)
 	if err != nil {
 		return 0
 	}
-	return runString.ToInteger()
+	val, err := runString.ToInteger()
+	if err != nil {
+		return 0
+	}
+	return val
 }
 
 func String2Double(input string) float64 {
@@ -27,12 +31,16 @@ func String2Double(input string) float64 {
 		return parseInt
 	}
 
-	vm := goja.New()
-	runString, err := vm.RunString(input)
+	vm := otto.New()
+	runString, err := vm.Run(input)
 	if err != nil {
 		return 0
 	}
-	return runString.ToFloat()
+	val, err := runString.ToFloat()
+	if err != nil {
+		return 0.0
+	}
+	return val
 }
 
 func String2Color(input string) *protobuf.ColorRpcModel {

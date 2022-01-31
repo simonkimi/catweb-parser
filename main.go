@@ -21,9 +21,8 @@ func main() {
 }
 
 //export ParseData
-func ParseData(input *C.char, size int) ParseResult {
-	dest := make([]byte, size)
-	copy(dest, (*(*[1 << 30]byte)(unsafe.Pointer(input)))[:size:size])
+func ParseData(input *C.char, size C.int) ParseResult {
+	dest := C.GoBytes(unsafe.Pointer(input), size)
 	marshal := parseData(dest)
 	return ParseResult{
 		data: (*C.char)(C.CBytes(marshal)),

@@ -1,7 +1,7 @@
 package selector
 
 import (
-	"github.com/dop251/goja"
+	"github.com/robertkrimen/otto"
 	"github.com/simonkimi/catweb-parser/gen/protobuf"
 	"regexp"
 	"strconv"
@@ -34,18 +34,18 @@ func CallReg(p *protobuf.Selector, input string) (string, error) {
 
 func CallJs(p *protobuf.Selector, input string) (string, error) {
 	if p.Js != "" {
-		vm := goja.New()
-		_, err := vm.RunString(p.Js)
+		vm := otto.New()
+		_, err := vm.Run(p.Js)
 		if err != nil {
 			return "", err
 		}
 
-		runString, err := vm.RunString("hook('" + input + "')")
+		runString, err := vm.Run("hook('" + input + "')")
 		if err != nil {
 			return "", err
 		}
 
-		return runString.Export().(string), nil
+		return runString.String(), nil
 
 	} else {
 		return input, nil

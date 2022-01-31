@@ -27,3 +27,13 @@ set CC=%ANDROID_NDK_HOME%\toolchains\llvm\prebuilt\windows-x86_64\bin\x86_64-lin
 go build -ldflags "-w -s" -buildmode=c-shared -o ../bin/x86_64/libgo.so ../main.go
 
 echo Build x86_64 finish
+
+
+set GOARCH=386
+set GOOS=android
+set CGO_ENABLED=1
+set CC=%ANDROID_NDK_HOME%\toolchains\llvm\prebuilt\windows-x86_64\bin\i686-linux-android24-clang
+
+go build -ldflags "-w -s" -buildmode=c-shared -o ../bin/x86/libgo.so ../main.go
+
+echo Build x86 finish
