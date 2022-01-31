@@ -40,6 +40,8 @@ func ListParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 			dom.Env[k] = v
 		}
 
+		model.NextPage = dom.String(parser.NextPage, root)
+
 		for _, e := range dom.Nodes(parser.ItemSelector, root) {
 			var badges []*protobuf.ListRpcModel_Tag
 			for _, e := range dom.Nodes(parser.BadgeSelector, e) {
@@ -61,16 +63,10 @@ func ListParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 					Text:  dom.String(parser.Tag, e),
 					Color: dom.Color(parser.Tag, e),
 				},
-				Badges: badges,
-				PreviewImg: &protobuf.ImageRpcModel{
-					Url:    dom.String(parser.PreviewImg.ImgUrl, e),
-					Width:  dom.Double(parser.PreviewImg.ImgWidth, e),
-					Height: dom.Double(parser.PreviewImg.ImgHeight, e),
-					ImgX:   dom.Double(parser.PreviewImg.ImgX, e),
-					ImgY:   dom.Double(parser.PreviewImg.ImgY, e),
-				},
-				NextPage: dom.String(parser.NextPage, e),
-				Env:      dom.LocalEnv(parser.ExtraSelector, protobuf.ExtraSelectorType_EXTRA_SELECTOR_TYPE_LIST_ITEM, e),
+				Badges:     badges,
+				PreviewImg: ImageParser(dom, parser.PreviewImg, e),
+				NextPage:   dom.String(parser.NextPage, e),
+				Env:        dom.LocalEnv(parser.ExtraSelector, protobuf.ExtraSelectorType_EXTRA_SELECTOR_TYPE_LIST_ITEM, e),
 			})
 		}
 		model.Items = items
