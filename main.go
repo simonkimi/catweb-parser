@@ -8,6 +8,7 @@ import (
 )
 
 /*
+#include <stdlib.h>
 struct ParseResult {
 	char* data;
 	int len;
@@ -28,6 +29,11 @@ func ParseData(input *C.char, size C.int) ParseResult {
 		data: (*C.char)(C.CBytes(marshal)),
 		len:  C.int(len(marshal)),
 	}
+}
+
+//export FreeResult
+func FreeResult(result ParseResult) {
+	C.free(unsafe.Pointer(result.data))
 }
 
 func parseData(input []byte) []byte {
