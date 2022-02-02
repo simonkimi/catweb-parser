@@ -5,6 +5,7 @@ import (
 	"github.com/antchfx/htmlquery"
 	"github.com/simonkimi/catweb-parser/gen/protobuf"
 	"github.com/simonkimi/catweb-parser/selector"
+	"golang.org/x/net/html"
 	"google.golang.org/protobuf/proto"
 	"strings"
 )
@@ -30,7 +31,6 @@ func ListParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 		}
 
 		// 开始解析
-		var items []*protobuf.ListRpcModel_Item
 		local, global := dom.GetEnv(parser.ExtraSelector, protobuf.ExtraSelectorType_EXTRA_SELECTOR_TYPE_NONE, root)
 		for k, v := range global {
 			globalEnv[k] = v
@@ -40,18 +40,8 @@ func ListParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 			dom.Env[k] = v
 		}
 
-		model.NextPage = dom.String(parser.NextPage, root)
-
-		for _, e := range dom.Nodes(parser.ItemSelector, root) {
-			var badges []*protobuf.ListRpcModel_Tag
-			for _, e := range dom.Nodes(parser.BadgeSelector, e) {
-				badges = append(badges, &protobuf.ListRpcModel_Tag{
-					Text:  dom.String(parser.BadgeText, e),
-					Color: dom.Color(parser.BadgeColor, e),
-				})
-			}
-
-			items = append(items, &protobuf.ListRpcModel_Item{
+		model.Items = DomMap(dom.Nodes(parser.ItemSelector, root), func(e *html.Node) *protobuf.ListRpcModel_Item {
+			return &protobuf.ListRpcModel_Item{
 				IdCode:     dom.String(parser.IdCode, e),
 				Title:      dom.String(parser.Title, e),
 				Subtitle:   dom.String(parser.Subtitle, e),
@@ -63,13 +53,19 @@ func ListParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 					Text:  dom.String(parser.Tag, e),
 					Color: dom.Color(parser.Tag, e),
 				},
-				Badges:     badges,
+				Badges: DomMap(dom.Nodes(parser.BadgeSelector, e), func(e *html.Node) *protobuf.ListRpcModel_Tag {
+					return &protobuf.ListRpcModel_Tag{
+						Text:  dom.String(parser.BadgeText, e),
+						Color: dom.Color(parser.BadgeColor, e),
+					}
+				}),
 				PreviewImg: ImageParser(dom, parser.PreviewImg, e),
 				NextPage:   dom.String(parser.NextPage, e),
 				Env:        dom.LocalEnv(parser.ExtraSelector, protobuf.ExtraSelectorType_EXTRA_SELECTOR_TYPE_LIST_ITEM, e),
-			})
-		}
-		model.Items = items
+			}
+		})
+
+		model.NextPage = dom.String(parser.NextPage, root)
 		model.GlobalEnv = globalEnv
 		model.LocalEnv = dom.Env
 

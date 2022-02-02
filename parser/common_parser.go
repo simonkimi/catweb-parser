@@ -16,3 +16,11 @@ func ImageParser(dom *selector.DomSelector, parser *protobuf.ImageSelector, node
 		Target: dom.String(parser.Target, node),
 	}
 }
+
+func DomMap[T any](parent []*html.Node, gen func(e *html.Node) *T) []*T {
+	var items []*T
+	for _, item := range parent {
+		items = append(items, gen(item))
+	}
+	return items
+}

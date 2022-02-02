@@ -5,6 +5,7 @@ import (
 	"github.com/antchfx/htmlquery"
 	"github.com/simonkimi/catweb-parser/gen/protobuf"
 	"github.com/simonkimi/catweb-parser/selector"
+	"golang.org/x/net/html"
 	"google.golang.org/protobuf/proto"
 	"strings"
 )
@@ -57,34 +58,28 @@ func DetailParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 		}
 
 		// 徽章
-		var badgeList []*protobuf.DetailRpcModel_Badge
-		for _, e := range dom.Nodes(parser.BadgeSelector, root) {
-			badgeList = append(badgeList, &protobuf.DetailRpcModel_Badge{
+		model.Badges = DomMap(dom.Nodes(parser.BadgeSelector, root), func(e *html.Node) *protobuf.DetailRpcModel_Badge {
+			return &protobuf.DetailRpcModel_Badge{
 				Text:     dom.String(parser.BadgeText, e),
 				Category: dom.String(parser.BadgeCategory, e),
-			})
-		}
-		model.Badges = badgeList
+			}
+		})
 
 		// 评论
-		var commentList []*protobuf.DetailRpcModel_Comment
-		for _, e := range dom.Nodes(parser.CommentSelector, root) {
-			commentList = append(commentList, &protobuf.DetailRpcModel_Comment{
+		model.Comments = DomMap(dom.Nodes(parser.CommentSelector, root), func(e *html.Node) *protobuf.DetailRpcModel_Comment {
+			return &protobuf.DetailRpcModel_Comment{
 				Username: dom.String(parser.Comment.Username, e),
 				Content:  dom.String(parser.Comment.Content, e),
 				Time:     dom.String(parser.Comment.Time, e),
 				Score:    dom.String(parser.Comment.Score, e),
 				Avatar:   ImageParser(dom, parser.Comment.Avatar, e),
-			})
-		}
-		model.Comments = commentList
+			}
+		})
 
 		// 缩略图
-		var imageList []*protobuf.ImageRpcModel
-		for _, e := range dom.Nodes(parser.ThumbnailSelector, root) {
-			imageList = append(imageList, ImageParser(dom, parser.Thumbnail, e))
-		}
-		model.PreviewImg = imageList
+		model.PreviewImg = DomMap(dom.Nodes(parser.ThumbnailSelector, root), func(e *html.Node) *protobuf.ImageRpcModel {
+			return ImageParser(dom, parser.Thumbnail, e)
+		})
 
 		model.GlobalEnv = globalEnv
 		model.LocalEnv = dom.Env
