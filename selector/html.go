@@ -45,7 +45,10 @@ func callQuery(p *protobuf.Selector, root *html.Node) (string, error) {
 	case protobuf.SelectorFunction_SELECTOR_FUNCTION_ATTR:
 		for _, key := range strings.Split(p.Param, ",") {
 			start := strings.TrimSpace(key)
-			return htmlquery.SelectAttr(node, start), nil
+			result := htmlquery.SelectAttr(node, start)
+			if result != "" {
+				return result, nil
+			}
 		}
 	case protobuf.SelectorFunction_SELECTOR_FUNCTION_RAW, protobuf.SelectorFunction_SELECTOR_FUNCTION_AUTO:
 		return htmlquery.OutputHTML(node, true), nil

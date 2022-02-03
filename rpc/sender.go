@@ -13,6 +13,10 @@ func ParseRpcData(data []byte) ([]byte, error) {
 		return nil, err
 	}
 
+	if rpcMessage.Env == nil {
+		rpcMessage.Env = make(map[string]string)
+	}
+
 	switch rpcMessage.Type {
 	case protobuf.RpcType_RPC_TYPE_LIST_VIEW_PARSER:
 		return parser.ListParser(rpcMessage)

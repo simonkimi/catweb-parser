@@ -18,8 +18,8 @@ set GOARCH=arm64
 set GOOS=android
 set CGO_ENABLED=1
 set CC=%ANDROID_NDK_HOME%\toolchains\llvm\prebuilt\windows-x86_64\bin\aarch64-linux-android21-clang
-go build -ldflags "-w -s" -buildmode=c-shared -o ..\bin\armeabi-v8a\libgo.so ..\main.go
-echo Build armeabi-v8a finish
+go build -ldflags "-w -s" -buildmode=c-shared -o ..\bin\arm64-v8a\libgo.so ..\main.go
+echo Build arm64-v8a finish
 
 set GOARCH=amd64
 set GOOS=android
@@ -43,9 +43,9 @@ md %LIB_TARGET%\armeabi-v7a
 md %LIB_TARGET%\armeabi-v8a
 md %LIB_TARGET%\x86_64
 md %LIB_TARGET%\x86
-copy /y %CD%\..\bin\windows\libgo.dll %CATWEB_HOME%\lib\libs\libgo.so
+copy /y %CD%\..\bin\windows\libgo.dll %CATWEB_HOME%\lib\libs\libgo.dll
 copy /y %CD%\..\bin\armeabi-v7a\libgo.so %LIB_TARGET%\armeabi-v7a\libgo.so
-copy /y %CD%\..\bin\armeabi-v8a\libgo.so %LIB_TARGET%\armeabi-v8a\libgo.so
+copy /y %CD%\..\bin\arm64-v8a\libgo.so %LIB_TARGET%\arm64-v8a\libgo.so
 copy /y %CD%\..\bin\x86_64\libgo.so %LIB_TARGET%\x86_64\libgo.so
 copy /y %CD%\..\bin\x86\libgo.so %LIB_TARGET%\x86\libgo.so
 echo Copy files finish

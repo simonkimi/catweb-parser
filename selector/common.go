@@ -22,8 +22,8 @@ func CallReg(p *protobuf.Selector, input string) (string, error) {
 			return match[0], err
 		} else {
 			rep := p.Replace
-			for i := 1; i < len(match); i++ {
-				rep = strings.Replace(rep, "$"+strconv.Itoa(i), match[1], -1)
+			for i := len(match) - 1; i >= 1; i-- {
+				rep = strings.Replace(rep, "$"+strconv.Itoa(i), match[i], -1)
 			}
 			return rep, nil
 		}
