@@ -54,11 +54,14 @@ func (p *DomSelector) GetEnv(extras []*protobuf.ExtraSelector, filter protobuf.E
 	global := make(map[string]string)
 
 	for _, extra := range extras {
-		if extra.Type == filter {
-			if extra.Global {
-				global[extra.Id] = p.String(extra.Selector, parent)
-			} else {
-				local[extra.Id] = p.String(extra.Selector, parent)
+		result := p.String(extra.Selector, parent)
+		if result != "" {
+			if extra.Type == filter {
+				if extra.Global {
+					global[extra.Id] = result
+				} else {
+					local[extra.Id] = result
+				}
 			}
 		}
 	}
@@ -67,11 +70,13 @@ func (p *DomSelector) GetEnv(extras []*protobuf.ExtraSelector, filter protobuf.E
 
 func (p *DomSelector) LocalEnv(extras []*protobuf.ExtraSelector, filter protobuf.ExtraSelectorType, parent *html.Node) map[string]string {
 	local := make(map[string]string)
-
 	for _, extra := range extras {
 		if extra.Type == filter {
 			if !extra.Global {
-				local[extra.Id] = p.String(extra.Selector, parent)
+				result := p.String(extra.Selector, parent)
+				if result != "" {
+					local[extra.Id] = result
+				}
 			}
 		}
 	}
