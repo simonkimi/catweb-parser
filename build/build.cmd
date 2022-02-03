@@ -40,7 +40,7 @@ echo Build x86 finish
 
 
 md %LIB_TARGET%\armeabi-v7a
-md %LIB_TARGET%\armeabi-v8a
+md %LIB_TARGET%\arm64-v8a
 md %LIB_TARGET%\x86_64
 md %LIB_TARGET%\x86
 copy /y %CD%\..\bin\windows\libgo.dll %CATWEB_HOME%\lib\libs\libgo.dll
