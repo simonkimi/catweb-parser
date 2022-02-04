@@ -24,3 +24,13 @@ func DomMap[T any](parent []*html.Node, gen func(e *html.Node) *T) []*T {
 	}
 	return items
 }
+
+func MergeEnv(global map[string]string, local map[string]string, newGlobal map[string]string, newLocal map[string]string) {
+	for k, v := range newGlobal {
+		global[k] = v
+		local[k] = v
+	}
+	for k, v := range newLocal {
+		local[k] = v
+	}
+}

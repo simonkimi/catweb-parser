@@ -22,7 +22,7 @@ func DetailParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 		return nil, errors.New("TODO: Json")
 	} else {
 		dom := &selector.DomSelector{Env: rpc.Env}
-		model := &protobuf.DetailRpcModel{}
+
 		globalEnv := make(map[string]string)
 
 		root, err := htmlquery.Parse(strings.NewReader(rpc.Data))
@@ -32,57 +32,43 @@ func DetailParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 
 		// 开始解析
 		local, global := dom.GetEnv(parser.ExtraSelector, protobuf.ExtraSelectorType_EXTRA_SELECTOR_TYPE_NONE, root)
-		for k, v := range global {
-			globalEnv[k] = v
-			dom.Env[k] = v
-		}
-		for k, v := range local {
-			dom.Env[k] = v
-		}
+		MergeEnv(globalEnv, dom.Env, global, local)
 
 		// 基础信息
-		model.Title = dom.String(parser.Title, root)
-		model.Subtitle = dom.String(parser.Subtitle, root)
-		model.UploadTime = dom.String(parser.UploadTime, root)
-		model.Language = dom.String(parser.Language, root)
-		model.Description = dom.String(parser.Description, root)
-
-		model.ImageCount = dom.Int(parser.ImgCount, root)
-		model.CountPrePage = dom.Int(parser.CountPrePage, root)
-		model.Star = dom.Double(parser.Star, root)
-
-		// Tag
-		model.Tag = &protobuf.DetailRpcModel_Tag{
-			Text:  dom.String(parser.Tag, root),
-			Color: dom.Color(parser.TagColor, root),
+		model := &protobuf.DetailRpcModel{
+			Title:        dom.String(parser.Title, root),
+			Subtitle:     dom.String(parser.Subtitle, root),
+			UploadTime:   dom.String(parser.UploadTime, root),
+			Language:     dom.String(parser.Language, root),
+			Description:  dom.String(parser.Description, root),
+			ImageCount:   dom.Int(parser.ImgCount, root),
+			CountPrePage: dom.Int(parser.CountPrePage, root),
+			Star:         dom.Double(parser.Star, root),
+			Tag: &protobuf.DetailRpcModel_Tag{
+				Text:  dom.String(parser.Tag, root),
+				Color: dom.Color(parser.TagColor, root),
+			},
+			Badges: DomMap(dom.Nodes(parser.BadgeSelector, root), func(e *html.Node) *protobuf.DetailRpcModel_Badge {
+				return &protobuf.DetailRpcModel_Badge{
+					Text:     dom.String(parser.BadgeText, e),
+					Category: dom.String(parser.BadgeCategory, e),
+				}
+			}),
+			Comments: DomMap(dom.Nodes(parser.CommentSelector, root), func(e *html.Node) *protobuf.DetailRpcModel_Comment {
+				return &protobuf.DetailRpcModel_Comment{
+					Username: dom.String(parser.Comment.Username, e),
+					Content:  dom.String(parser.Comment.Content, e),
+					Time:     dom.String(parser.Comment.Time, e),
+					Score:    dom.String(parser.Comment.Score, e),
+					Avatar:   ImageParser(dom, parser.Comment.Avatar, e),
+				}
+			}),
+			PreviewImg: DomMap(dom.Nodes(parser.ThumbnailSelector, root), func(e *html.Node) *protobuf.ImageRpcModel {
+				return ImageParser(dom, parser.Thumbnail, e)
+			}),
+			GlobalEnv: globalEnv,
+			LocalEnv:  dom.Env,
 		}
-
-		// 徽章
-		model.Badges = DomMap(dom.Nodes(parser.BadgeSelector, root), func(e *html.Node) *protobuf.DetailRpcModel_Badge {
-			return &protobuf.DetailRpcModel_Badge{
-				Text:     dom.String(parser.BadgeText, e),
-				Category: dom.String(parser.BadgeCategory, e),
-			}
-		})
-
-		// 评论
-		model.Comments = DomMap(dom.Nodes(parser.CommentSelector, root), func(e *html.Node) *protobuf.DetailRpcModel_Comment {
-			return &protobuf.DetailRpcModel_Comment{
-				Username: dom.String(parser.Comment.Username, e),
-				Content:  dom.String(parser.Comment.Content, e),
-				Time:     dom.String(parser.Comment.Time, e),
-				Score:    dom.String(parser.Comment.Score, e),
-				Avatar:   ImageParser(dom, parser.Comment.Avatar, e),
-			}
-		})
-
-		// 缩略图
-		model.PreviewImg = DomMap(dom.Nodes(parser.ThumbnailSelector, root), func(e *html.Node) *protobuf.ImageRpcModel {
-			return ImageParser(dom, parser.Thumbnail, e)
-		})
-
-		model.GlobalEnv = globalEnv
-		model.LocalEnv = dom.Env
 
 		marshal, err := proto.Marshal(model)
 		if err != nil {

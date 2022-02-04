@@ -22,7 +22,7 @@ func ListParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 		return nil, errors.New("TODO: Json")
 	} else {
 		dom := &selector.DomSelector{Env: rpc.Env}
-		model := &protobuf.ListRpcModel{}
+
 		globalEnv := make(map[string]string)
 
 		root, err := htmlquery.Parse(strings.NewReader(rpc.Data))
@@ -32,42 +32,37 @@ func ListParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 
 		// 开始解析
 		local, global := dom.GetEnv(parser.ExtraSelector, protobuf.ExtraSelectorType_EXTRA_SELECTOR_TYPE_NONE, root)
-		for k, v := range global {
-			globalEnv[k] = v
-			dom.Env[k] = v
-		}
-		for k, v := range local {
-			dom.Env[k] = v
-		}
+		MergeEnv(globalEnv, dom.Env, global, local)
 
-		model.Items = DomMap(dom.Nodes(parser.ItemSelector, root), func(e *html.Node) *protobuf.ListRpcModel_Item {
-			return &protobuf.ListRpcModel_Item{
-				IdCode:     dom.String(parser.IdCode, e),
-				Title:      dom.String(parser.Title, e),
-				Subtitle:   dom.String(parser.Subtitle, e),
-				ImgCount:   dom.Int(parser.ImgCount, e),
-				Paper:      dom.String(parser.Paper, e),
-				Star:       dom.Double(parser.Star, e),
-				UploadTime: dom.String(parser.UploadTime, e),
-				Tag: &protobuf.ListRpcModel_Tag{
-					Text:  dom.String(parser.Tag, e),
-					Color: dom.Color(parser.Tag, e),
-				},
-				Badges: DomMap(dom.Nodes(parser.BadgeSelector, e), func(e *html.Node) *protobuf.ListRpcModel_Tag {
-					return &protobuf.ListRpcModel_Tag{
-						Text:  dom.String(parser.BadgeText, e),
-						Color: dom.Color(parser.BadgeColor, e),
-					}
-				}),
-				PreviewImg: ImageParser(dom, parser.PreviewImg, e),
-				NextPage:   dom.String(parser.NextPage, e),
-				Env:        dom.LocalEnv(parser.ExtraSelector, protobuf.ExtraSelectorType_EXTRA_SELECTOR_TYPE_LIST_ITEM, e),
-			}
-		})
-
-		model.NextPage = dom.String(parser.NextPage, root)
-		model.GlobalEnv = globalEnv
-		model.LocalEnv = dom.Env
+		model := &protobuf.ListRpcModel{
+			Items: DomMap(dom.Nodes(parser.ItemSelector, root), func(e *html.Node) *protobuf.ListRpcModel_Item {
+				return &protobuf.ListRpcModel_Item{
+					IdCode:     dom.String(parser.IdCode, e),
+					Title:      dom.String(parser.Title, e),
+					Subtitle:   dom.String(parser.Subtitle, e),
+					ImgCount:   dom.Int(parser.ImgCount, e),
+					Paper:      dom.String(parser.Paper, e),
+					Star:       dom.Double(parser.Star, e),
+					UploadTime: dom.String(parser.UploadTime, e),
+					Tag: &protobuf.ListRpcModel_Tag{
+						Text:  dom.String(parser.Tag, e),
+						Color: dom.Color(parser.Tag, e),
+					},
+					Badges: DomMap(dom.Nodes(parser.BadgeSelector, e), func(e *html.Node) *protobuf.ListRpcModel_Tag {
+						return &protobuf.ListRpcModel_Tag{
+							Text:  dom.String(parser.BadgeText, e),
+							Color: dom.Color(parser.BadgeColor, e),
+						}
+					}),
+					PreviewImg: ImageParser(dom, parser.PreviewImg, e),
+					NextPage:   dom.String(parser.NextPage, e),
+					Env:        dom.LocalEnv(parser.ExtraSelector, protobuf.ExtraSelectorType_EXTRA_SELECTOR_TYPE_LIST_ITEM, e),
+				}
+			}),
+			NextPage:  dom.String(parser.NextPage, root),
+			GlobalEnv: globalEnv,
+			LocalEnv:  dom.Env,
+		}
 
 		marshal, err := proto.Marshal(model)
 		if err != nil {
