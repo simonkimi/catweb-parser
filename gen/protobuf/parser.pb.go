@@ -359,7 +359,6 @@ type DetailParser struct {
 	// 缩略图
 	ThumbnailSelector *Selector      `protobuf:"bytes,20,opt,name=thumbnail_selector,json=thumbnailSelector,proto3" json:"thumbnail_selector,omitempty"`
 	Thumbnail         *ImageSelector `protobuf:"bytes,21,opt,name=thumbnail,proto3" json:"thumbnail,omitempty"`
-	ThumbnailUrl      *Selector      `protobuf:"bytes,22,opt,name=thumbnail_url,json=thumbnailUrl,proto3" json:"thumbnail_url,omitempty"`
 	// 评论
 	CommentSelector *Selector        `protobuf:"bytes,30,opt,name=comment_selector,json=commentSelector,proto3" json:"comment_selector,omitempty"`
 	Comment         *CommentSelector `protobuf:"bytes,31,opt,name=comment,proto3" json:"comment,omitempty"`
@@ -500,13 +499,6 @@ func (x *DetailParser) GetThumbnailSelector() *Selector {
 func (x *DetailParser) GetThumbnail() *ImageSelector {
 	if x != nil {
 		return x.Thumbnail
-	}
-	return nil
-}
-
-func (x *DetailParser) GetThumbnailUrl() *Selector {
-	if x != nil {
-		return x.ThumbnailUrl
 	}
 	return nil
 }
@@ -790,7 +782,7 @@ var file_parser_proto_rawDesc = []byte{
 	0x65, 0x12, 0x35, 0x0a, 0x0e, 0x65, 0x78, 0x74, 0x72, 0x61, 0x5f, 0x73, 0x65, 0x6c, 0x65, 0x63,
 	0x74, 0x6f, 0x72, 0x18, 0x63, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x45, 0x78, 0x74, 0x72,
 	0x61, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x52, 0x0d, 0x65, 0x78, 0x74, 0x72, 0x61,
-	0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x22, 0xca, 0x09, 0x0a, 0x0c, 0x44, 0x65, 0x74,
+	0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x22, 0x9a, 0x09, 0x0a, 0x0c, 0x44, 0x65, 0x74,
 	0x61, 0x69, 0x6c, 0x50, 0x61, 0x72, 0x73, 0x65, 0x72, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d,
 	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x12, 0x0a,
 	0x04, 0x75, 0x75, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x75, 0x75, 0x69,
@@ -823,9 +815,6 @@ var file_parser_proto_rawDesc = []byte{
 	0x72, 0x12, 0x2c, 0x0a, 0x09, 0x74, 0x68, 0x75, 0x6d, 0x62, 0x6e, 0x61, 0x69, 0x6c, 0x18, 0x15,
 	0x20, 0x01, 0x28, 0x0b, 0x32, 0x0e, 0x2e, 0x49, 0x6d, 0x61, 0x67, 0x65, 0x53, 0x65, 0x6c, 0x65,
 	0x63, 0x74, 0x6f, 0x72, 0x52, 0x09, 0x74, 0x68, 0x75, 0x6d, 0x62, 0x6e, 0x61, 0x69, 0x6c, 0x12,
-	0x2e, 0x0a, 0x0d, 0x74, 0x68, 0x75, 0x6d, 0x62, 0x6e, 0x61, 0x69, 0x6c, 0x5f, 0x75, 0x72, 0x6c,
-	0x18, 0x16, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x09, 0x2e, 0x53, 0x65, 0x6c, 0x65, 0x63, 0x74, 0x6f,
-	0x72, 0x52, 0x0c, 0x74, 0x68, 0x75, 0x6d, 0x62, 0x6e, 0x61, 0x69, 0x6c, 0x55, 0x72, 0x6c, 0x12,
 	0x34, 0x0a, 0x10, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x5f, 0x73, 0x65, 0x6c, 0x65, 0x63,
 	0x74, 0x6f, 0x72, 0x18, 0x1e, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x09, 0x2e, 0x53, 0x65, 0x6c, 0x65,
 	0x63, 0x74, 0x6f, 0x72, 0x52, 0x0f, 0x63, 0x6f, 0x6d, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x65, 0x6c,
@@ -953,31 +942,30 @@ var file_parser_proto_depIdxs = []int32{
 	4,  // 34: DetailParser.description:type_name -> Selector
 	4,  // 35: DetailParser.thumbnail_selector:type_name -> Selector
 	5,  // 36: DetailParser.thumbnail:type_name -> ImageSelector
-	4,  // 37: DetailParser.thumbnail_url:type_name -> Selector
-	4,  // 38: DetailParser.comment_selector:type_name -> Selector
-	7,  // 39: DetailParser.comment:type_name -> CommentSelector
-	4,  // 40: DetailParser.tag:type_name -> Selector
-	4,  // 41: DetailParser.tag_color:type_name -> Selector
-	4,  // 42: DetailParser.badge_selector:type_name -> Selector
-	4,  // 43: DetailParser.badge_text:type_name -> Selector
-	4,  // 44: DetailParser.badge_category:type_name -> Selector
-	4,  // 45: DetailParser.chapter_selector:type_name -> Selector
-	4,  // 46: DetailParser.chapter_title:type_name -> Selector
-	4,  // 47: DetailParser.chapter_subtitle:type_name -> Selector
-	5,  // 48: DetailParser.chapter_cover:type_name -> ImageSelector
-	4,  // 49: DetailParser.next_page:type_name -> Selector
-	4,  // 50: DetailParser.count_pre_page:type_name -> Selector
-	6,  // 51: DetailParser.extra_selector:type_name -> ExtraSelector
-	4,  // 52: AutoCompleteParser.item_selector:type_name -> Selector
-	4,  // 53: AutoCompleteParser.item_complete:type_name -> Selector
-	4,  // 54: AutoCompleteParser.item_subtitle:type_name -> Selector
-	4,  // 55: AutoCompleteParser.item_title:type_name -> Selector
-	6,  // 56: AutoCompleteParser.extra_selector:type_name -> ExtraSelector
-	57, // [57:57] is the sub-list for method output_type
-	57, // [57:57] is the sub-list for method input_type
-	57, // [57:57] is the sub-list for extension type_name
-	57, // [57:57] is the sub-list for extension extendee
-	0,  // [0:57] is the sub-list for field type_name
+	4,  // 37: DetailParser.comment_selector:type_name -> Selector
+	7,  // 38: DetailParser.comment:type_name -> CommentSelector
+	4,  // 39: DetailParser.tag:type_name -> Selector
+	4,  // 40: DetailParser.tag_color:type_name -> Selector
+	4,  // 41: DetailParser.badge_selector:type_name -> Selector
+	4,  // 42: DetailParser.badge_text:type_name -> Selector
+	4,  // 43: DetailParser.badge_category:type_name -> Selector
+	4,  // 44: DetailParser.chapter_selector:type_name -> Selector
+	4,  // 45: DetailParser.chapter_title:type_name -> Selector
+	4,  // 46: DetailParser.chapter_subtitle:type_name -> Selector
+	5,  // 47: DetailParser.chapter_cover:type_name -> ImageSelector
+	4,  // 48: DetailParser.next_page:type_name -> Selector
+	4,  // 49: DetailParser.count_pre_page:type_name -> Selector
+	6,  // 50: DetailParser.extra_selector:type_name -> ExtraSelector
+	4,  // 51: AutoCompleteParser.item_selector:type_name -> Selector
+	4,  // 52: AutoCompleteParser.item_complete:type_name -> Selector
+	4,  // 53: AutoCompleteParser.item_subtitle:type_name -> Selector
+	4,  // 54: AutoCompleteParser.item_title:type_name -> Selector
+	6,  // 55: AutoCompleteParser.extra_selector:type_name -> ExtraSelector
+	56, // [56:56] is the sub-list for method output_type
+	56, // [56:56] is the sub-list for method input_type
+	56, // [56:56] is the sub-list for extension type_name
+	56, // [56:56] is the sub-list for extension extendee
+	0,  // [0:56] is the sub-list for field type_name
 }
 
 func init() { file_parser_proto_init() }

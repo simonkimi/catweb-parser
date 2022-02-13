@@ -17,14 +17,6 @@ func ImageParser(dom *selector.DomSelector, parser *protobuf.ImageSelector, node
 	}
 }
 
-func DomMap[T any](parent []*html.Node, gen func(e *html.Node) *T) []*T {
-	var items []*T
-	for _, item := range parent {
-		items = append(items, gen(item))
-	}
-	return items
-}
-
 func MergeEnv(global map[string]string, local map[string]string, newGlobal map[string]string, newLocal map[string]string) {
 	for k, v := range newGlobal {
 		global[k] = v

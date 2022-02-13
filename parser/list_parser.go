@@ -5,6 +5,7 @@ import (
 	"github.com/antchfx/htmlquery"
 	"github.com/simonkimi/catweb-parser/gen/protobuf"
 	"github.com/simonkimi/catweb-parser/selector"
+	"github.com/simonkimi/catweb-parser/utils"
 	"golang.org/x/net/html"
 	"google.golang.org/protobuf/proto"
 	"strings"
@@ -35,7 +36,7 @@ func ListParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 		MergeEnv(globalEnv, dom.Env, global, local)
 
 		model := &protobuf.ListRpcModel{
-			Items: DomMap(dom.Nodes(parser.ItemSelector, root), func(e *html.Node) *protobuf.ListRpcModel_Item {
+			Items: utils.Map(dom.Nodes(parser.ItemSelector, root), func(e *html.Node) *protobuf.ListRpcModel_Item {
 				return &protobuf.ListRpcModel_Item{
 					IdCode:     dom.String(parser.IdCode, e),
 					Title:      dom.String(parser.Title, e),
@@ -44,12 +45,12 @@ func ListParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 					Paper:      dom.String(parser.Paper, e),
 					Star:       dom.Double(parser.Star, e),
 					UploadTime: dom.String(parser.UploadTime, e),
-					Tag: &protobuf.ListRpcModel_Tag{
+					Tag: &protobuf.TagRpcModel{
 						Text:  dom.String(parser.Tag, e),
-						Color: dom.Color(parser.Tag, e),
+						Color: dom.Color(parser.TagColor, e),
 					},
-					Badges: DomMap(dom.Nodes(parser.BadgeSelector, e), func(e *html.Node) *protobuf.ListRpcModel_Tag {
-						return &protobuf.ListRpcModel_Tag{
+					Badges: utils.Map(dom.Nodes(parser.BadgeSelector, e), func(e *html.Node) *protobuf.TagRpcModel {
+						return &protobuf.TagRpcModel{
 							Text:  dom.String(parser.BadgeText, e),
 							Color: dom.Color(parser.BadgeColor, e),
 						}

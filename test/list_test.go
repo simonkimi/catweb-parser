@@ -9,7 +9,7 @@ import (
 )
 
 func TestList(t *testing.T) {
-	buffer, err := ioutil.ReadFile("./list_buffer.io")
+	buffer, err := ioutil.ReadFile("./buffer.tmp")
 	if err != nil {
 		t.Error(err)
 		return
@@ -22,6 +22,6 @@ func TestList(t *testing.T) {
 	_ = proto.Unmarshal(rsp.Data, &model)
 
 	for _, i := range model.Items {
-		t.Log(i.Star)
+		t.Log(i.Tag)
 	}
 }

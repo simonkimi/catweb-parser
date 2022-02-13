@@ -26,15 +26,14 @@ func String2Int(input string) int64 {
 }
 
 func String2Double(input string) float64 {
-	parseInt, err := strconv.ParseFloat(input, 64)
+	result, err := strconv.ParseFloat(input, 64)
 	if err == nil {
-		return parseInt
+		return result
 	}
-
 	vm := otto.New()
 	runString, err := vm.Run(input)
 	if err != nil {
-		return 0
+		return 0.0
 	}
 	val, err := runString.ToFloat()
 	if err != nil {
@@ -60,4 +59,12 @@ func String2Color(input string) *protobuf.ColorRpcModel {
 		G: int32(parseInt >> 8 & 0xFF),
 		B: int32(parseInt & 0xFF),
 	}
+}
+
+func Map[T any, E any](input []T, function func(item T) E) []E {
+	var list []E
+	for _, item := range input {
+		list = append(list, function(item))
+	}
+	return list
 }

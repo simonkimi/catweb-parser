@@ -5,6 +5,7 @@ import (
 	"github.com/antchfx/htmlquery"
 	"github.com/simonkimi/catweb-parser/gen/protobuf"
 	"github.com/simonkimi/catweb-parser/selector"
+	"github.com/simonkimi/catweb-parser/utils"
 	"golang.org/x/net/html"
 	"google.golang.org/protobuf/proto"
 	"strings"
@@ -44,17 +45,17 @@ func DetailParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 			ImageCount:   dom.Int(parser.ImgCount, root),
 			CountPrePage: dom.Int(parser.CountPrePage, root),
 			Star:         dom.Double(parser.Star, root),
-			Tag: &protobuf.DetailRpcModel_Tag{
+			Tag: &protobuf.TagRpcModel{
 				Text:  dom.String(parser.Tag, root),
 				Color: dom.Color(parser.TagColor, root),
 			},
-			Badges: DomMap(dom.Nodes(parser.BadgeSelector, root), func(e *html.Node) *protobuf.DetailRpcModel_Badge {
+			Badges: utils.Map(dom.Nodes(parser.BadgeSelector, root), func(e *html.Node) *protobuf.DetailRpcModel_Badge {
 				return &protobuf.DetailRpcModel_Badge{
 					Text:     dom.String(parser.BadgeText, e),
 					Category: dom.String(parser.BadgeCategory, e),
 				}
 			}),
-			Comments: DomMap(dom.Nodes(parser.CommentSelector, root), func(e *html.Node) *protobuf.DetailRpcModel_Comment {
+			Comments: utils.Map(dom.Nodes(parser.CommentSelector, root), func(e *html.Node) *protobuf.DetailRpcModel_Comment {
 				return &protobuf.DetailRpcModel_Comment{
 					Username: dom.String(parser.Comment.Username, e),
 					Content:  dom.String(parser.Comment.Content, e),
@@ -63,7 +64,7 @@ func DetailParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 					Avatar:   ImageParser(dom, parser.Comment.Avatar, e),
 				}
 			}),
-			PreviewImg: DomMap(dom.Nodes(parser.ThumbnailSelector, root), func(e *html.Node) *protobuf.ImageRpcModel {
+			PreviewImg: utils.Map(dom.Nodes(parser.ThumbnailSelector, root), func(e *html.Node) *protobuf.ImageRpcModel {
 				return ImageParser(dom, parser.Thumbnail, e)
 			}),
 			GlobalEnv: globalEnv,
