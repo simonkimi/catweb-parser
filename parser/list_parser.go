@@ -45,6 +45,7 @@ func ListParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 					Paper:      dom.String(parser.Paper, e),
 					Star:       dom.Double(parser.Star, e),
 					UploadTime: dom.String(parser.UploadTime, e),
+					Language:   dom.String(parser.Language, e),
 					Tag: &protobuf.TagRpcModel{
 						Text:  dom.String(parser.Tag, e),
 						Color: dom.Color(parser.TagColor, e),

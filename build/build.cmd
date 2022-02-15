@@ -43,6 +43,13 @@ md %LIB_TARGET%\armeabi-v7a
 md %LIB_TARGET%\arm64-v8a
 md %LIB_TARGET%\x86_64
 md %LIB_TARGET%\x86
+
+del /f /s /q %CATWEB_HOME%\lib\libs\libgo.dll
+del /f /s /q %LIB_TARGET%\armeabi-v7a\libgo.so
+del /f /s /q %LIB_TARGET%\arm64-v8a\libgo.so
+del /f /s /q %LIB_TARGET%\x86_64\libgo.so
+del /f /s /q %LIB_TARGET%\x86\libgo.so
+
 copy /y %CD%\..\bin\windows\libgo.dll %CATWEB_HOME%\lib\libs\libgo.dll
 copy /y %CD%\..\bin\armeabi-v7a\libgo.so %LIB_TARGET%\armeabi-v7a\libgo.so
 copy /y %CD%\..\bin\arm64-v8a\libgo.so %LIB_TARGET%\arm64-v8a\libgo.so
