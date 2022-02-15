@@ -19,7 +19,7 @@ func CallReg(p *protobuf.Selector, input string) (string, error) {
 			return "", nil
 		}
 		if p.Replace == "" {
-			return match[0], err
+			return match[len(match)-1], err
 		} else {
 			rep := p.Replace
 			for i := len(match) - 1; i >= 1; i-- {

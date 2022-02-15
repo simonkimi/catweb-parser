@@ -22,6 +22,6 @@ func TestList(t *testing.T) {
 	_ = proto.Unmarshal(rsp.Data, &model)
 
 	for _, i := range model.Items {
-		t.Log(i.Tag)
+		t.Log(i.Badges)
 	}
 }

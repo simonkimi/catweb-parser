@@ -49,6 +49,15 @@ func (p *DomSelector) Color(selector *protobuf.Selector, parent *html.Node) *pro
 	return utils.String2Color(input)
 }
 
+func (p *DomSelector) Test(selector *protobuf.Selector, parent *html.Node) string {
+	result, err := ParseTest(selector, parent)
+	if err != nil {
+		return "err" + err.Error()
+	}
+	input := utils.EnvReplace(result, p.Env)
+	return input
+}
+
 func (p *DomSelector) GetEnv(extras []*protobuf.ExtraSelector, filter protobuf.ExtraSelectorType, parent *html.Node) (map[string]string, map[string]string) {
 	local := make(map[string]string)
 	global := make(map[string]string)

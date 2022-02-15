@@ -79,3 +79,25 @@ func ParseElement(p *protobuf.Selector, root *html.Node) (string, error) {
 
 	return function, nil
 }
+
+func ParseTest(p *protobuf.Selector, root *html.Node) (string, error) {
+	if p == nil {
+		return "Selector is nil", nil
+	}
+	function, err := callQuery(p, root)
+	if err != nil {
+		return "CallQuery is nil", nil
+	}
+
+	function, err = CallReg(p, function)
+	if err != nil {
+		return "CallReg is nil", nil
+	}
+
+	function, err = CallJs(p, function)
+	if err != nil {
+		return "CallJs is nil", nil
+	}
+
+	return function, nil
+}
