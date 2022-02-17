@@ -37,8 +37,7 @@ func ListParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 
 		model := &protobuf.ListRpcModel{
 			Items: utils.Map(dom.Nodes(parser.ItemSelector, root), func(e *html.Node) *protobuf.ListRpcModel_Item {
-				return &protobuf.ListRpcModel_Item{
-					IdCode:     dom.String(parser.IdCode, e),
+				item := &protobuf.ListRpcModel_Item{
 					Title:      dom.String(parser.Title, e),
 					Subtitle:   dom.String(parser.Subtitle, e),
 					ImgCount:   dom.Int(parser.ImgCount, e),
@@ -60,6 +59,8 @@ func ListParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 					NextPage:   dom.String(parser.NextPage, e),
 					Env:        dom.LocalEnv(parser.ExtraSelector, protobuf.ExtraSelectorType_EXTRA_SELECTOR_TYPE_LIST_ITEM, e),
 				}
+				item.Env["idCode"] = dom.String(parser.IdCode, e)
+				return item
 			}),
 			NextPage:  dom.String(parser.NextPage, root),
 			GlobalEnv: globalEnv,

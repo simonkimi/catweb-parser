@@ -11,13 +11,23 @@ import (
 func FindElement(p *protobuf.Selector, root *html.Node) []*html.Node {
 	var node []*html.Node
 
+	if root == nil || p == nil {
+		return []*html.Node{}
+	}
+
 	if p.Selector == "" {
 		return []*html.Node{root}
 	}
 
-	if strings.HasPrefix(p.Selector, "/") { // XPath选择器
-		node = htmlquery.Find(root, p.Selector)
+	if strings.HasPrefix(p.Selector, "/") {
+		// XPath选择器
+		result, err := htmlquery.QueryAll(root, p.Selector)
+		if err != nil {
+			return []*html.Node{}
+		}
+		node = result
 	} else {
+		// Html选择器
 		document := goquery.NewDocumentFromNode(root)
 		node = document.Find(p.Selector).Nodes
 	}
