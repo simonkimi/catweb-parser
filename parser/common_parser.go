@@ -7,6 +7,9 @@ import (
 )
 
 func ImageParser(dom *selector.DomSelector, parser *protobuf.ImageSelector, node *html.Node) *protobuf.ImageRpcModel {
+	if parser == nil {
+		return nil
+	}
 	return &protobuf.ImageRpcModel{
 		Url:    dom.String(parser.ImgUrl, node),
 		Width:  dom.Double(parser.ImgWidth, node),

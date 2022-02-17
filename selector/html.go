@@ -9,8 +9,6 @@ import (
 )
 
 func FindElement(p *protobuf.Selector, root *html.Node) []*html.Node {
-	var node []*html.Node
-
 	if root == nil || p == nil {
 		return []*html.Node{}
 	}
@@ -25,14 +23,12 @@ func FindElement(p *protobuf.Selector, root *html.Node) []*html.Node {
 		if err != nil {
 			return []*html.Node{}
 		}
-		node = result
+		return result
 	} else {
 		// Html选择器
 		document := goquery.NewDocumentFromNode(root)
-		node = document.Find(p.Selector).Nodes
+		return document.Find(p.Selector).Nodes
 	}
-
-	return node
 }
 
 func callQuery(p *protobuf.Selector, root *html.Node) (string, error) {
