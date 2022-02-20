@@ -23,7 +23,7 @@ func ParseRpcData(data []byte) ([]byte, error) {
 	case protobuf.RpcType_RPC_TYPE_IMAGE_PARSER:
 		return nil, errors.New("TODO: RpcType_RPC_TYPE_IMAGE_PARSER")
 	case protobuf.RpcType_RPC_TYPE_GALLERY_PARSER:
-		return parser.DetailParser(rpcMessage)
+		return parser.GalleryParser(rpcMessage)
 	}
 
 	return nil, errors.New("TODO: 你怎么到的这里")

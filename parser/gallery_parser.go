@@ -11,8 +11,8 @@ import (
 	"strings"
 )
 
-func DetailParser(rpc *protobuf.RpcRequest) ([]byte, error) {
-	parser := &protobuf.DetailParser{}
+func GalleryParser(rpc *protobuf.RpcRequest) ([]byte, error) {
+	parser := &protobuf.GalleryParser{}
 	err := proto.Unmarshal(rpc.ParserData, parser)
 	if err != nil {
 		return nil, err
@@ -36,7 +36,7 @@ func DetailParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 		MergeEnv(globalEnv, dom.Env, global, local)
 
 		// 基础信息
-		model := &protobuf.DetailRpcModel{
+		model := &protobuf.GalleryRpcModel{
 			Title:        dom.String(parser.Title, root),
 			Subtitle:     dom.String(parser.Subtitle, root),
 			UploadTime:   dom.String(parser.UploadTime, root),
@@ -49,14 +49,14 @@ func DetailParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 				Text:  dom.String(parser.Tag, root),
 				Color: dom.Color(parser.TagColor, root),
 			},
-			Badges: utils.Map(dom.Nodes(parser.BadgeSelector, root), func(e *html.Node) *protobuf.DetailRpcModel_Badge {
-				return &protobuf.DetailRpcModel_Badge{
+			Badges: utils.Map(dom.Nodes(parser.BadgeSelector, root), func(e *html.Node) *protobuf.GalleryRpcModel_Badge {
+				return &protobuf.GalleryRpcModel_Badge{
 					Text:     dom.String(parser.BadgeText, e),
 					Category: dom.String(parser.BadgeCategory, e),
 				}
 			}),
-			Comments: utils.Map(dom.Nodes(parser.CommentSelector, root), func(e *html.Node) *protobuf.DetailRpcModel_Comment {
-				return &protobuf.DetailRpcModel_Comment{
+			Comments: utils.Map(dom.Nodes(parser.CommentSelector, root), func(e *html.Node) *protobuf.GalleryRpcModel_Comment {
+				return &protobuf.GalleryRpcModel_Comment{
 					Username: dom.String(parser.Comment.Username, e),
 					Content:  dom.String(parser.Comment.Content, e),
 					Time:     dom.String(parser.Comment.Time, e),
