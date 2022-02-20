@@ -1,6 +1,7 @@
 package selector
 
 import (
+	"encoding/json"
 	"github.com/robertkrimen/otto"
 	"github.com/simonkimi/catweb-parser/gen/protobuf"
 	"regexp"
@@ -34,8 +35,23 @@ func CallReg(p *protobuf.Selector, input string) (string, error) {
 
 func CallJs(p *protobuf.Selector, input string) (string, error) {
 	if p.Js != "" {
+		js := strings.TrimSpace(p.Js)
+		if strings.HasPrefix(js, "{") && strings.HasSuffix(js, "}") {
+			// Json格式数据, 进行替换
+			data := make(map[string]string)
+			err := json.Unmarshal([]byte(js), &data)
+			if err == nil {
+				val, exist := data[strings.TrimSpace(input)]
+				if exist {
+					return val, nil
+				}
+				return input, nil
+			}
+		}
+
+		// 其他格式数据, 进行转换
 		vm := otto.New()
-		_, err := vm.Run(p.Js)
+		_, err := vm.Run(js)
 		if err != nil {
 			return "", err
 		}
