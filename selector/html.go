@@ -31,44 +31,43 @@ func FindElement(p *protobuf.Selector, root *html.Node) []*html.Node {
 	}
 }
 
-func callQuery(p *protobuf.Selector, root *html.Node) (string, error) {
+func callQuery(p *protobuf.Selector, root *html.Node) (string, error, bool) {
 	if p.Selector == "" {
 		if !(p.Function != protobuf.SelectorFunction_SELECTOR_FUNCTION_AUTO || p.Param != "" || p.Regex != "" || p.Replace != "" || p.Js != "") {
-			if p.DefaultValue != "" {
-				return p.DefaultValue, nil
-			}
-			return "", nil
+			return "", nil, false
 		}
 	}
 
 	nodes := FindElement(p, root)
-	if len(nodes) == 0 {
-		return "", nil
-	}
-	node := nodes[0]
 
-	switch p.Function {
-	case protobuf.SelectorFunction_SELECTOR_FUNCTION_ATTR:
-		for _, key := range strings.Split(p.Param, ",") {
-			start := strings.TrimSpace(key)
-			result := htmlquery.SelectAttr(node, start)
-			if result != "" {
-				return result, nil
+	for _, node := range nodes {
+		switch p.Function {
+		case protobuf.SelectorFunction_SELECTOR_FUNCTION_ATTR:
+			for _, key := range strings.Split(p.Param, ",") {
+				start := strings.TrimSpace(key)
+				result := htmlquery.SelectAttr(node, start)
+				if result != "" {
+					return result, nil, true
+				}
 			}
+		case protobuf.SelectorFunction_SELECTOR_FUNCTION_RAW, protobuf.SelectorFunction_SELECTOR_FUNCTION_AUTO:
+			return htmlquery.OutputHTML(node, true), nil, true
+		case protobuf.SelectorFunction_SELECTOR_FUNCTION_TEXT:
+			return htmlquery.InnerText(node), nil, true
 		}
-	case protobuf.SelectorFunction_SELECTOR_FUNCTION_RAW, protobuf.SelectorFunction_SELECTOR_FUNCTION_AUTO:
-		return htmlquery.OutputHTML(node, true), nil
-	case protobuf.SelectorFunction_SELECTOR_FUNCTION_TEXT:
-		return htmlquery.InnerText(node), nil
 	}
-	return "", nil
+
+	return "", nil, false
 }
 
 func ParseElement(p *protobuf.Selector, root *html.Node) (string, error) {
 	if p == nil {
 		return "", nil
 	}
-	function, err := callQuery(p, root)
+	function, err, isFound := callQuery(p, root)
+	if p.DefaultValue != "" && !isFound {
+		return p.DefaultValue, nil
+	}
 	if err != nil {
 		return "", nil
 	}
@@ -90,9 +89,13 @@ func ParseTest(p *protobuf.Selector, root *html.Node) (string, error) {
 	if p == nil {
 		return "Selector is nil", nil
 	}
-	function, err := callQuery(p, root)
+	function, err, isFound := callQuery(p, root)
 	if err != nil {
 		return "CallQuery is nil", nil
+	}
+
+	if p.DefaultValue != "" && !isFound {
+		function = p.DefaultValue
 	}
 
 	function, err = CallReg(p, function)

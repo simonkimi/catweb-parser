@@ -8,6 +8,9 @@ import (
 )
 
 func String2Int(input string) int64 {
+	if input == "" {
+		return 0
+	}
 	parseInt, err := strconv.ParseInt(input, 10, 64)
 	if err == nil {
 		return parseInt
@@ -26,6 +29,9 @@ func String2Int(input string) int64 {
 }
 
 func String2Double(input string) float64 {
+	if input == "" {
+		return 0
+	}
 	result, err := strconv.ParseFloat(input, 64)
 	if err == nil {
 		return result
