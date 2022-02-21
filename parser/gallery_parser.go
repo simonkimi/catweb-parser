@@ -49,8 +49,8 @@ func GalleryParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 				Text:  dom.String(parser.Tag, root),
 				Color: dom.Color(parser.TagColor, root),
 			},
-			Badges: utils.Map(dom.Nodes(parser.BadgeSelector, root), func(e *html.Node) *protobuf.GalleryRpcModel_Badge {
-				return &protobuf.GalleryRpcModel_Badge{
+			Badges: utils.Map(dom.Nodes(parser.BadgeSelector, root), func(e *html.Node) *protobuf.TagRpcModel {
+				return &protobuf.TagRpcModel{
 					Text:     dom.String(parser.BadgeText, e),
 					Category: dom.String(parser.BadgeCategory, e),
 				}

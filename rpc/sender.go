@@ -21,12 +21,12 @@ func ParseRpcData(data []byte) ([]byte, error) {
 	case protobuf.RpcType_RPC_TYPE_LIST_VIEW_PARSER:
 		return parser.ListParser(rpcMessage)
 	case protobuf.RpcType_RPC_TYPE_IMAGE_PARSER:
-		return nil, errors.New("TODO: RpcType_RPC_TYPE_IMAGE_PARSER")
+		return parser.ImageReaderParser(rpcMessage)
 	case protobuf.RpcType_RPC_TYPE_GALLERY_PARSER:
 		return parser.GalleryParser(rpcMessage)
 	}
 
-	return nil, errors.New("TODO: 你怎么到的这里")
+	return nil, errors.New("TODO: Unsupported: " + rpcMessage.Type.String())
 }
 
 func ExecSelector(input []byte) []byte {
