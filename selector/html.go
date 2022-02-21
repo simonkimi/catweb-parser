@@ -1,12 +1,38 @@
 package selector
 
 import (
+	"bytes"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/antchfx/htmlquery"
 	"github.com/simonkimi/catweb-parser/gen/protobuf"
 	"golang.org/x/net/html"
 	"strings"
 )
+
+func innerText(n *html.Node) string {
+	var output func(*bytes.Buffer, *html.Node)
+	output = func(buf *bytes.Buffer, n *html.Node) {
+		switch n.Type {
+		case html.TextNode:
+			buf.WriteString(n.Data)
+			return
+		case html.CommentNode:
+			return
+		case html.ElementNode:
+			if n.Data == "br" {
+				buf.WriteString("\n")
+			}
+
+		}
+		for child := n.FirstChild; child != nil; child = child.NextSibling {
+			output(buf, child)
+		}
+	}
+
+	var buf bytes.Buffer
+	output(&buf, n)
+	return buf.String()
+}
 
 func FindElement(p *protobuf.Selector, root *html.Node) []*html.Node {
 	if root == nil || p == nil {
@@ -53,7 +79,7 @@ func callQuery(p *protobuf.Selector, root *html.Node) (string, error, bool) {
 		case protobuf.SelectorFunction_SELECTOR_FUNCTION_RAW, protobuf.SelectorFunction_SELECTOR_FUNCTION_AUTO:
 			return htmlquery.OutputHTML(node, true), nil, true
 		case protobuf.SelectorFunction_SELECTOR_FUNCTION_TEXT:
-			return htmlquery.InnerText(node), nil, true
+			return innerText(node), nil, true
 		}
 	}
 

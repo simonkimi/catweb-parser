@@ -4,6 +4,7 @@ import (
 	"github.com/simonkimi/catweb-parser/gen/protobuf"
 	"github.com/simonkimi/catweb-parser/utils"
 	"golang.org/x/net/html"
+	"math"
 )
 
 type DomSelector struct {
@@ -32,6 +33,13 @@ func (p *DomSelector) Int(selector *protobuf.Selector, parent *html.Node) int32 
 }
 
 func (p *DomSelector) Double(selector *protobuf.Selector, parent *html.Node) float64 {
+	if selector == nil || selector.Selector == "" {
+		if selector != nil && selector.DefaultValue != "" {
+			return utils.String2Double(utils.EnvReplace(selector.DefaultValue, p.Env))
+		} else {
+			return math.NaN()
+		}
+	}
 	result, err := ParseElement(selector, parent)
 	if err != nil {
 		return 0

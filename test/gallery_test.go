@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"github.com/simonkimi/catweb-parser/gen/protobuf"
 	"github.com/simonkimi/catweb-parser/rpc"
 	"google.golang.org/protobuf/proto"
@@ -20,4 +21,6 @@ func TestDetail(t *testing.T) {
 
 	model := protobuf.GalleryRpcModel{}
 	_ = proto.Unmarshal(rsp.Data, &model)
+
+	fmt.Println(model.Description)
 }
