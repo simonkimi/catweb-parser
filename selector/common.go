@@ -34,8 +34,8 @@ func CallReg(p *protobuf.Selector, input string) (string, error) {
 }
 
 func CallJs(p *protobuf.Selector, input string) (string, error) {
-	if p.Js != "" {
-		js := strings.TrimSpace(p.Js)
+	if p.Script != "" {
+		js := strings.TrimSpace(p.Script)
 		if strings.HasPrefix(js, "{") && strings.HasSuffix(js, "}") {
 			// Json格式数据, 进行替换
 			data := make(map[string]string)

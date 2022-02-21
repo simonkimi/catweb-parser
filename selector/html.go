@@ -59,7 +59,7 @@ func FindElement(p *protobuf.Selector, root *html.Node) []*html.Node {
 
 func callQuery(p *protobuf.Selector, root *html.Node) (string, error, bool) {
 	if p.Selector == "" {
-		if !(p.Function != protobuf.SelectorFunction_SELECTOR_FUNCTION_AUTO || p.Param != "" || p.Regex != "" || p.Replace != "" || p.Js != "") {
+		if !(p.Function != protobuf.SelectorFunction_SELECTOR_FUNCTION_AUTO || p.Param != "" || p.Regex != "" || p.Replace != "" || p.Script != "") {
 			return "", nil, false
 		}
 	}
