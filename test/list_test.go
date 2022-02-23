@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/simonkimi/catweb-parser/gen/protobuf"
 	"github.com/simonkimi/catweb-parser/rpc"
-	"github.com/simonkimi/catweb-parser/utils"
 	"google.golang.org/protobuf/proto"
 	"io/ioutil"
 	"testing"
@@ -24,12 +23,6 @@ func TestList(t *testing.T) {
 	_ = proto.Unmarshal(rsp.Data, &model)
 
 	for _, i := range model.Items {
-		t.Log(i.Badges)
+		fmt.Println(i)
 	}
-}
-
-func TestString2Color(t *testing.T) {
-	str := "#EA4C89"
-	color := utils.String2Color(str)
-	fmt.Println(color)
 }
