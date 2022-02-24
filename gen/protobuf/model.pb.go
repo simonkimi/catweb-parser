@@ -606,6 +606,69 @@ func (x *ImageReaderRpcModel) GetGlobalEnv() map[string]string {
 	return nil
 }
 
+type AutoCompleteRpcModel struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Items     []*AutoCompleteRpcModel_Item `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
+	LocalEnv  map[string]string            `protobuf:"bytes,10,rep,name=localEnv,proto3" json:"localEnv,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+	GlobalEnv map[string]string            `protobuf:"bytes,11,rep,name=globalEnv,proto3" json:"globalEnv,omitempty" protobuf_key:"bytes,1,opt,name=key,proto3" protobuf_val:"bytes,2,opt,name=value,proto3"`
+}
+
+func (x *AutoCompleteRpcModel) Reset() {
+	*x = AutoCompleteRpcModel{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_model_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AutoCompleteRpcModel) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AutoCompleteRpcModel) ProtoMessage() {}
+
+func (x *AutoCompleteRpcModel) ProtoReflect() protoreflect.Message {
+	mi := &file_model_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AutoCompleteRpcModel.ProtoReflect.Descriptor instead.
+func (*AutoCompleteRpcModel) Descriptor() ([]byte, []int) {
+	return file_model_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *AutoCompleteRpcModel) GetItems() []*AutoCompleteRpcModel_Item {
+	if x != nil {
+		return x.Items
+	}
+	return nil
+}
+
+func (x *AutoCompleteRpcModel) GetLocalEnv() map[string]string {
+	if x != nil {
+		return x.LocalEnv
+	}
+	return nil
+}
+
+func (x *AutoCompleteRpcModel) GetGlobalEnv() map[string]string {
+	if x != nil {
+		return x.GlobalEnv
+	}
+	return nil
+}
+
 type ListRpcModel_Item struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -628,7 +691,7 @@ type ListRpcModel_Item struct {
 func (x *ListRpcModel_Item) Reset() {
 	*x = ListRpcModel_Item{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_model_proto_msgTypes[7]
+		mi := &file_model_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -641,7 +704,7 @@ func (x *ListRpcModel_Item) String() string {
 func (*ListRpcModel_Item) ProtoMessage() {}
 
 func (x *ListRpcModel_Item) ProtoReflect() protoreflect.Message {
-	mi := &file_model_proto_msgTypes[7]
+	mi := &file_model_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -756,7 +819,7 @@ type GalleryRpcModel_Comment struct {
 func (x *GalleryRpcModel_Comment) Reset() {
 	*x = GalleryRpcModel_Comment{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_model_proto_msgTypes[11]
+		mi := &file_model_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -769,7 +832,7 @@ func (x *GalleryRpcModel_Comment) String() string {
 func (*GalleryRpcModel_Comment) ProtoMessage() {}
 
 func (x *GalleryRpcModel_Comment) ProtoReflect() protoreflect.Message {
-	mi := &file_model_proto_msgTypes[11]
+	mi := &file_model_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -818,6 +881,69 @@ func (x *GalleryRpcModel_Comment) GetAvatar() *ImageRpcModel {
 		return x.Avatar
 	}
 	return nil
+}
+
+type AutoCompleteRpcModel_Item struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Title    string `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
+	Subtitle string `protobuf:"bytes,2,opt,name=subtitle,proto3" json:"subtitle,omitempty"`
+	Complete string `protobuf:"bytes,3,opt,name=complete,proto3" json:"complete,omitempty"`
+}
+
+func (x *AutoCompleteRpcModel_Item) Reset() {
+	*x = AutoCompleteRpcModel_Item{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_model_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AutoCompleteRpcModel_Item) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AutoCompleteRpcModel_Item) ProtoMessage() {}
+
+func (x *AutoCompleteRpcModel_Item) ProtoReflect() protoreflect.Message {
+	mi := &file_model_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AutoCompleteRpcModel_Item.ProtoReflect.Descriptor instead.
+func (*AutoCompleteRpcModel_Item) Descriptor() ([]byte, []int) {
+	return file_model_proto_rawDescGZIP(), []int{6, 0}
+}
+
+func (x *AutoCompleteRpcModel_Item) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *AutoCompleteRpcModel_Item) GetSubtitle() string {
+	if x != nil {
+		return x.Subtitle
+	}
+	return ""
+}
+
+func (x *AutoCompleteRpcModel_Item) GetComplete() string {
+	if x != nil {
+		return x.Complete
+	}
+	return ""
 }
 
 var File_model_proto protoreflect.FileDescriptor
@@ -987,9 +1113,35 @@ var file_model_proto_rawDesc = []byte{
 	0x6f, 0x62, 0x61, 0x6c, 0x45, 0x6e, 0x76, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a, 0x03,
 	0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x14,
 	0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x76,
-	0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x42, 0x10, 0x5a, 0x0e, 0x2e, 0x2f, 0x67, 0x65,
-	0x6e, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x22, 0x9e, 0x03, 0x0a, 0x14, 0x41, 0x75, 0x74,
+	0x6f, 0x43, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x52, 0x70, 0x63, 0x4d, 0x6f, 0x64, 0x65,
+	0x6c, 0x12, 0x30, 0x0a, 0x05, 0x69, 0x74, 0x65, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b,
+	0x32, 0x1a, 0x2e, 0x41, 0x75, 0x74, 0x6f, 0x43, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x52,
+	0x70, 0x63, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x05, 0x69, 0x74,
+	0x65, 0x6d, 0x73, 0x12, 0x3f, 0x0a, 0x08, 0x6c, 0x6f, 0x63, 0x61, 0x6c, 0x45, 0x6e, 0x76, 0x18,
+	0x0a, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x41, 0x75, 0x74, 0x6f, 0x43, 0x6f, 0x6d, 0x70,
+	0x6c, 0x65, 0x74, 0x65, 0x52, 0x70, 0x63, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x4c, 0x6f, 0x63,
+	0x61, 0x6c, 0x45, 0x6e, 0x76, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x08, 0x6c, 0x6f, 0x63, 0x61,
+	0x6c, 0x45, 0x6e, 0x76, 0x12, 0x42, 0x0a, 0x09, 0x67, 0x6c, 0x6f, 0x62, 0x61, 0x6c, 0x45, 0x6e,
+	0x76, 0x18, 0x0b, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x24, 0x2e, 0x41, 0x75, 0x74, 0x6f, 0x43, 0x6f,
+	0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x52, 0x70, 0x63, 0x4d, 0x6f, 0x64, 0x65, 0x6c, 0x2e, 0x47,
+	0x6c, 0x6f, 0x62, 0x61, 0x6c, 0x45, 0x6e, 0x76, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x52, 0x09, 0x67,
+	0x6c, 0x6f, 0x62, 0x61, 0x6c, 0x45, 0x6e, 0x76, 0x1a, 0x54, 0x0a, 0x04, 0x49, 0x74, 0x65, 0x6d,
+	0x12, 0x14, 0x0a, 0x05, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x05, 0x74, 0x69, 0x74, 0x6c, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x73, 0x75, 0x62, 0x74, 0x69, 0x74,
+	0x6c, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x73, 0x75, 0x62, 0x74, 0x69, 0x74,
+	0x6c, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x63, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x63, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x74, 0x65, 0x1a, 0x3b,
+	0x0a, 0x0d, 0x4c, 0x6f, 0x63, 0x61, 0x6c, 0x45, 0x6e, 0x76, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12,
+	0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65,
+	0x79, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x1a, 0x3c, 0x0a, 0x0e, 0x47,
+	0x6c, 0x6f, 0x62, 0x61, 0x6c, 0x45, 0x6e, 0x76, 0x45, 0x6e, 0x74, 0x72, 0x79, 0x12, 0x10, 0x0a,
+	0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12,
+	0x14, 0x0a, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05,
+	0x76, 0x61, 0x6c, 0x75, 0x65, 0x3a, 0x02, 0x38, 0x01, 0x42, 0x10, 0x5a, 0x0e, 0x2e, 0x2f, 0x67,
+	0x65, 0x6e, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1004,52 +1156,59 @@ func file_model_proto_rawDescGZIP() []byte {
 	return file_model_proto_rawDescData
 }
 
-var file_model_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_model_proto_msgTypes = make([]protoimpl.MessageInfo, 20)
 var file_model_proto_goTypes = []interface{}{
-	(*ImageRpcModel)(nil),           // 0: ImageRpcModel
-	(*ColorRpcModel)(nil),           // 1: ColorRpcModel
-	(*TagRpcModel)(nil),             // 2: TagRpcModel
-	(*ListRpcModel)(nil),            // 3: ListRpcModel
-	(*GalleryRpcModel)(nil),         // 4: GalleryRpcModel
-	(*ImageReaderRpcModel)(nil),     // 5: ImageReaderRpcModel
-	nil,                             // 6: TagRpcModel.EnvEntry
-	(*ListRpcModel_Item)(nil),       // 7: ListRpcModel.Item
-	nil,                             // 8: ListRpcModel.LocalEnvEntry
-	nil,                             // 9: ListRpcModel.GlobalEnvEntry
-	nil,                             // 10: ListRpcModel.Item.EnvEntry
-	(*GalleryRpcModel_Comment)(nil), // 11: GalleryRpcModel.Comment
-	nil,                             // 12: GalleryRpcModel.LocalEnvEntry
-	nil,                             // 13: GalleryRpcModel.GlobalEnvEntry
-	nil,                             // 14: ImageReaderRpcModel.LocalEnvEntry
-	nil,                             // 15: ImageReaderRpcModel.GlobalEnvEntry
+	(*ImageRpcModel)(nil),             // 0: ImageRpcModel
+	(*ColorRpcModel)(nil),             // 1: ColorRpcModel
+	(*TagRpcModel)(nil),               // 2: TagRpcModel
+	(*ListRpcModel)(nil),              // 3: ListRpcModel
+	(*GalleryRpcModel)(nil),           // 4: GalleryRpcModel
+	(*ImageReaderRpcModel)(nil),       // 5: ImageReaderRpcModel
+	(*AutoCompleteRpcModel)(nil),      // 6: AutoCompleteRpcModel
+	nil,                               // 7: TagRpcModel.EnvEntry
+	(*ListRpcModel_Item)(nil),         // 8: ListRpcModel.Item
+	nil,                               // 9: ListRpcModel.LocalEnvEntry
+	nil,                               // 10: ListRpcModel.GlobalEnvEntry
+	nil,                               // 11: ListRpcModel.Item.EnvEntry
+	(*GalleryRpcModel_Comment)(nil),   // 12: GalleryRpcModel.Comment
+	nil,                               // 13: GalleryRpcModel.LocalEnvEntry
+	nil,                               // 14: GalleryRpcModel.GlobalEnvEntry
+	nil,                               // 15: ImageReaderRpcModel.LocalEnvEntry
+	nil,                               // 16: ImageReaderRpcModel.GlobalEnvEntry
+	(*AutoCompleteRpcModel_Item)(nil), // 17: AutoCompleteRpcModel.Item
+	nil,                               // 18: AutoCompleteRpcModel.LocalEnvEntry
+	nil,                               // 19: AutoCompleteRpcModel.GlobalEnvEntry
 }
 var file_model_proto_depIdxs = []int32{
 	1,  // 0: TagRpcModel.color:type_name -> ColorRpcModel
-	6,  // 1: TagRpcModel.env:type_name -> TagRpcModel.EnvEntry
-	7,  // 2: ListRpcModel.items:type_name -> ListRpcModel.Item
-	8,  // 3: ListRpcModel.localEnv:type_name -> ListRpcModel.LocalEnvEntry
-	9,  // 4: ListRpcModel.globalEnv:type_name -> ListRpcModel.GlobalEnvEntry
+	7,  // 1: TagRpcModel.env:type_name -> TagRpcModel.EnvEntry
+	8,  // 2: ListRpcModel.items:type_name -> ListRpcModel.Item
+	9,  // 3: ListRpcModel.localEnv:type_name -> ListRpcModel.LocalEnvEntry
+	10, // 4: ListRpcModel.globalEnv:type_name -> ListRpcModel.GlobalEnvEntry
 	0,  // 5: GalleryRpcModel.preview_img:type_name -> ImageRpcModel
 	0,  // 6: GalleryRpcModel.cover_img:type_name -> ImageRpcModel
 	2,  // 7: GalleryRpcModel.tag:type_name -> TagRpcModel
 	2,  // 8: GalleryRpcModel.badges:type_name -> TagRpcModel
-	11, // 9: GalleryRpcModel.comments:type_name -> GalleryRpcModel.Comment
-	12, // 10: GalleryRpcModel.localEnv:type_name -> GalleryRpcModel.LocalEnvEntry
-	13, // 11: GalleryRpcModel.globalEnv:type_name -> GalleryRpcModel.GlobalEnvEntry
+	12, // 9: GalleryRpcModel.comments:type_name -> GalleryRpcModel.Comment
+	13, // 10: GalleryRpcModel.localEnv:type_name -> GalleryRpcModel.LocalEnvEntry
+	14, // 11: GalleryRpcModel.globalEnv:type_name -> GalleryRpcModel.GlobalEnvEntry
 	0,  // 12: ImageReaderRpcModel.image:type_name -> ImageRpcModel
 	2,  // 13: ImageReaderRpcModel.badges:type_name -> TagRpcModel
-	14, // 14: ImageReaderRpcModel.localEnv:type_name -> ImageReaderRpcModel.LocalEnvEntry
-	15, // 15: ImageReaderRpcModel.globalEnv:type_name -> ImageReaderRpcModel.GlobalEnvEntry
-	0,  // 16: ListRpcModel.Item.preview_img:type_name -> ImageRpcModel
-	2,  // 17: ListRpcModel.Item.tag:type_name -> TagRpcModel
-	2,  // 18: ListRpcModel.Item.badges:type_name -> TagRpcModel
-	10, // 19: ListRpcModel.Item.env:type_name -> ListRpcModel.Item.EnvEntry
-	0,  // 20: GalleryRpcModel.Comment.avatar:type_name -> ImageRpcModel
-	21, // [21:21] is the sub-list for method output_type
-	21, // [21:21] is the sub-list for method input_type
-	21, // [21:21] is the sub-list for extension type_name
-	21, // [21:21] is the sub-list for extension extendee
-	0,  // [0:21] is the sub-list for field type_name
+	15, // 14: ImageReaderRpcModel.localEnv:type_name -> ImageReaderRpcModel.LocalEnvEntry
+	16, // 15: ImageReaderRpcModel.globalEnv:type_name -> ImageReaderRpcModel.GlobalEnvEntry
+	17, // 16: AutoCompleteRpcModel.items:type_name -> AutoCompleteRpcModel.Item
+	18, // 17: AutoCompleteRpcModel.localEnv:type_name -> AutoCompleteRpcModel.LocalEnvEntry
+	19, // 18: AutoCompleteRpcModel.globalEnv:type_name -> AutoCompleteRpcModel.GlobalEnvEntry
+	0,  // 19: ListRpcModel.Item.preview_img:type_name -> ImageRpcModel
+	2,  // 20: ListRpcModel.Item.tag:type_name -> TagRpcModel
+	2,  // 21: ListRpcModel.Item.badges:type_name -> TagRpcModel
+	11, // 22: ListRpcModel.Item.env:type_name -> ListRpcModel.Item.EnvEntry
+	0,  // 23: GalleryRpcModel.Comment.avatar:type_name -> ImageRpcModel
+	24, // [24:24] is the sub-list for method output_type
+	24, // [24:24] is the sub-list for method input_type
+	24, // [24:24] is the sub-list for extension type_name
+	24, // [24:24] is the sub-list for extension extendee
+	0,  // [0:24] is the sub-list for field type_name
 }
 
 func init() { file_model_proto_init() }
@@ -1130,7 +1289,19 @@ func file_model_proto_init() {
 				return nil
 			}
 		}
-		file_model_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
+		file_model_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AutoCompleteRpcModel); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_model_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListRpcModel_Item); i {
 			case 0:
 				return &v.state
@@ -1142,8 +1313,20 @@ func file_model_proto_init() {
 				return nil
 			}
 		}
-		file_model_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
+		file_model_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GalleryRpcModel_Comment); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_model_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AutoCompleteRpcModel_Item); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1161,7 +1344,7 @@ func file_model_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_model_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   16,
+			NumMessages:   20,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

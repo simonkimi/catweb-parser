@@ -24,6 +24,9 @@ func ParseRpcData(data []byte) ([]byte, error) {
 		return parser.ImageReaderParser(rpcMessage)
 	case protobuf.RpcType_RPC_TYPE_GALLERY_PARSER:
 		return parser.GalleryParser(rpcMessage)
+	case protobuf.RpcType_RPC_TYPE_AUTO_COMPLETE:
+		return parser.AutoCompleteParser(rpcMessage)
+
 	}
 
 	return nil, errors.New("TODO: Unsupported: " + rpcMessage.Type.String())

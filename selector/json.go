@@ -2,6 +2,7 @@ package selector
 
 import (
 	"github.com/ohler55/ojg/jp"
+	"github.com/ohler55/ojg/oj"
 	"github.com/simonkimi/catweb-parser/gen/protobuf"
 	"github.com/simonkimi/catweb-parser/utils"
 	"math"
@@ -44,6 +45,8 @@ func callJsQuery(p *protobuf.Selector, root any) (string, bool) {
 		return strconv.FormatFloat(nodes[0].(float64), 'f', -1, 64), true
 	case bool:
 		return strconv.FormatBool(nodes[0].(bool)), true
+	case map[string]interface{}:
+		return oj.JSON(root), true
 	default:
 		return "", false
 	}
