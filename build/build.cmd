@@ -1,6 +1,6 @@
 @echo off
-set ANDROID_NDK_HOME=G:\SDK\AndroidSDK\ndk\24.0.7956693
-set CATWEB_HOME=H:\Android\Project\catweb
+set ANDROID_NDK_HOME=E:\SDK\AndroidSDK\ndk\23.1.7779620
+set CATWEB_HOME=F:\android\project\catweb
 set LIB_TARGET=%CATWEB_HOME%\android\app\libs
 set CD=%cd%
 
