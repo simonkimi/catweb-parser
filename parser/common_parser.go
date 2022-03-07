@@ -18,7 +18,6 @@ func ImageParser(dom *selector.DomSelector, parser *protobuf.ImageSelector, node
 		Height: dom.Double(parser.ImgHeight, node),
 		ImgX:   dom.Double(parser.ImgX, node),
 		ImgY:   dom.Double(parser.ImgY, node),
-		Target: dom.String(parser.Target, node),
 	}
 }
 

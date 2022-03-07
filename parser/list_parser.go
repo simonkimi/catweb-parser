@@ -36,6 +36,7 @@ func ListParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 					}
 				}),
 				PreviewImg: ImageParser(dom, parser.PreviewImg, e),
+				Target:     dom.String(parser.Target, e),
 				NextPage:   dom.String(parser.NextPage, e),
 				Env:        dom.LocalEnv(parser.ExtraSelector, protobuf.ExtraSelectorType_EXTRA_SELECTOR_TYPE_LIST_ITEM, e),
 			}

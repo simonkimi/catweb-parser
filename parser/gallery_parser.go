@@ -44,8 +44,11 @@ func GalleryParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 				Avatar:   ImageParser(dom, parser.Comment.Avatar, e),
 			}
 		}),
-		PreviewImg: utils.Map(dom.Nodes(parser.ThumbnailSelector, root), func(e any) *protobuf.ImageRpcModel {
-			return ImageParser(dom, parser.Thumbnail, e)
+		Items: utils.Map(dom.Nodes(parser.ThumbnailSelector, root), func(e any) *protobuf.GalleryRpcModel_Item {
+			return &protobuf.GalleryRpcModel_Item{
+				PreviewImg: ImageParser(dom, parser.Thumbnail, e),
+				Target:     dom.String(parser.Target, e),
+			}
 		}),
 		CoverImg:  ImageParser(dom, parser.CoverImg, root),
 		NextPage:  dom.String(parser.NextPage, root),
