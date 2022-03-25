@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'catweb_parser'
-  s.version          = '0.0.2'
+  s.version          = '0.0.3'
   s.summary          = 'A new flutter plugin project.'
   s.description      = <<-DESC
 A new flutter plugin project.
@@ -16,8 +16,8 @@ A new flutter plugin project.
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
   s.platform = :ios, '9.0'
-  s.vendored_libraries = 'Classes/*.a'
-  s.public_header_files = 'Classes/*.h'
+  s.vendored_libraries = 'Classes/**/*.a'
+  s.public_header_files = 'Classes/**/*.h'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
   s.swift_version = '5.0'
 end
