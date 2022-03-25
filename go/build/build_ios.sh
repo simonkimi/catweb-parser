@@ -1,6 +1,8 @@
+export CGO_ENABLED=1
+export CGO_CFLAGS="-fembed-bitcode"
+
 export GOARCH=arm64
 export GOOS=ios
-export CGO_ENABLED=1
 export CC=$GOROOT/misc/ios/clangwrap.sh
 go build -ldflags "-w -s" -buildmode=c-archive -o ../../ios/Classes/libgo.a ../main.go
 
