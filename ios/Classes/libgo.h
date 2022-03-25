@@ -80,6 +80,7 @@ extern "C" {
 extern struct ParseResult ParseData(char* input, int size);
 extern void FreeResult(struct ParseResult result);
 extern struct ParseResult RunJs(char* js, char* input);
+extern void FakeCall();
 
 #ifdef __cplusplus
 }

@@ -8,8 +8,17 @@
 #import "catweb_parser-Swift.h"
 #endif
 
+#import "libgo.h"
+
+
 @implementation CatwebParserPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   [SwiftCatwebParserPlugin registerWithRegistrar:registrar];
 }
+
+
++ (void)fakeFunction {
+    FakeCall();
+}
+
 @end

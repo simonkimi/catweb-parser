@@ -58,5 +58,10 @@ func RunJs(js *C.char, input *C.char) ParseResult {
 	}
 }
 
+//export FakeCall
+func FakeCall() {
+
+}
+
 func main() {
 }
