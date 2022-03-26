@@ -12,7 +12,7 @@ class NativeBinder {
   static final _native = NativeLibrary(Platform.isAndroid
       ? DynamicLibrary.open('libgo.so')
       : Platform.isWindows
-          ? DynamicLibrary.open('./lib/libs/libgo.dll')
+          ? DynamicLibrary.open('windows/libs/libgo.dll')
           : DynamicLibrary.process());
 
   static Uint8List parse(Uint8List raw) {
@@ -39,4 +39,6 @@ class NativeBinder {
     _native.FreeResult(result);
     return str;
   }
+
+  static void test() => _native.FakeCall();
 }

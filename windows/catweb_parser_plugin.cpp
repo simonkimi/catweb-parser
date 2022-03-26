@@ -14,6 +14,8 @@
 #include <memory>
 #include <sstream>
 
+#include "libs/libgo.h"
+
 namespace {
 
 class CatwebParserPlugin : public flutter::Plugin {

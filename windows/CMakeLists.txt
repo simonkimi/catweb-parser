@@ -22,3 +22,7 @@ set(catweb_parser_bundled_libraries
   ""
   PARENT_SCOPE
 )
+
+include_directories(libs)
+link_directories(libs)
+
