@@ -17,7 +17,7 @@ del /f /s /q %ANDROID_PATH%\x86\libgo.so
 
 set GOARCH=arm
 set GOOS=android
-set CC=%ANDROID_NDK_HOME%\toolchains\llvm\prebuilt\windows-x86_64\bin\armv7a-linux-androideabi21-clang
+set CC=%ANDROID_NDK_HOME%\toolchains\llvm\prebuilt\windows-x86_64\bin\armv7a-linux-androideabi19-clang
 go build -ldflags "-w -s" -buildmode=c-shared -o %ANDROID_PATH%\armeabi-v7a\libgo.so ../main.go
 echo Build armeabi-v7a finish
 
