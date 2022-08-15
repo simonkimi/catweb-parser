@@ -46,6 +46,12 @@ func ListParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 		NextPage:  dom.String(parser.NextPage, root),
 		GlobalEnv: global,
 		LocalEnv:  dom.Env,
+
+		EnableSuccess: parser.SuccessSelector.Selector != "",
+		EnableFail:    parser.FailedSelector.Selector != "",
+
+		IsSuccess:     dom.String(parser.SuccessSelector, root) != "",
+		FailedMessage: dom.String(parser.FailedSelector, root),
 	}
 
 	marshal, err := proto.Marshal(model)

@@ -26,6 +26,12 @@ func AutoCompleteParser(rpc *protobuf.RpcRequest) ([]byte, error) {
 		}),
 		LocalEnv:  dom.Env,
 		GlobalEnv: global,
+
+		EnableSuccess: parser.SuccessSelector.Selector != "",
+		EnableFail:    parser.FailedSelector.Selector != "",
+
+		IsSuccess:     dom.String(parser.SuccessSelector, root) != "",
+		FailedMessage: dom.String(parser.FailedSelector, root),
 	}
 
 	marshal, err := proto.Marshal(model)
